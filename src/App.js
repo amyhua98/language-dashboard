@@ -1,11 +1,11 @@
 import './App.css';
 import React, {useState, useEffect} from 'react';
-import { Card, Icon, Image, Dropdown } from 'semantic-ui-react';
+import { Card, Icon, Image, Statistic} from 'semantic-ui-react';
 
 
 
 function App() {
-  const [watchers, setWatchers] = useState('');
+  const [watchers, setWatchers] = useState();
 
   useEffect(() => {
     fetch('https://api.github.com/repos/facebook/create-react-app')
@@ -13,12 +13,13 @@ function App() {
       .then(data => {
         console.log(data)
         console.log(data.watchers_count)
+        
         setReact(data);
       });
   }, []);
 
   const setReact = (watchers_count) => {
-    setWatchers(watchers)
+    setWatchers(watchers_count)
   }
 
   return (
@@ -31,18 +32,16 @@ function App() {
         </Card.Content>
     <Image src='https://react.semantic-ui.com/images/avatar/large/matthew.png' wrapped ui={false} />
     <Card.Content>
-      <Card.Meta>
-        <span className='watchers'>Watchers: {watchers}</span>
-      </Card.Meta>
-      <Card.Description>
-        Matthew is a musician living in Nashville.
-      </Card.Description>
+        <Statistic>
+          <Statistic.Value>{JSON.stringify(watchers.watchers)}</Statistic.Value>
+          <Statistic.Label>Watchers</Statistic.Label>
+        </Statistic>
     </Card.Content>
     <Card.Content extra>
-      <a>
+      <div>
         <Icon name='user' />
         22 Friends
-      </a>
+      </div>
     </Card.Content>
   </Card>
       </div>
